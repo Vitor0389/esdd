@@ -1,3 +1,5 @@
+#include <stdio.h>
+#include <stdlib.h>
 
 int main(){
     int array[12] = {1, 1, 1, 1, 2, 2, 3, 3, 3, 3, 3, 3}; //Array de exemplo
@@ -23,7 +25,7 @@ int main(){
     }
     sizeFinal = size - k;
     arrayCompactado = realloc(arrayCompactado, sizeFinal * sizeof(int));
-    
+
     for(int i = 0;  i < k; i++){
         printf("[%2d]", arrayCompactado[i]);
     }
