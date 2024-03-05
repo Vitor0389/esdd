@@ -9,7 +9,7 @@ int main(){
     int sizeFinal = 0;
 
     arrayCompactado = calloc(sizeof(int), 12); // Calloc pra nao dar lixo de memória
-    int contador = 1; // contador
+    int contador = 0; // contador
     for(int i = 0; i < 12; i++){
         size ++; // Contando quantos elementos tem
         if(i + 1 < 12 && array[i] == array[i + 1]){ // Condição de parada i + 1 < 12 pra ele nao tentar ler o que ta fora do Array.
@@ -20,7 +20,7 @@ int main(){
             k++;
             arrayCompactado[k] = contador;
             k++;
-            contador = 1;
+            contador = 0;
         }
     }
     sizeFinal = size - k;
