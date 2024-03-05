@@ -50,7 +50,7 @@ void compactar(imagemP2* imagemPGM, int matrizP2[][24], int matrizP8[][24]){
 	for (int i = 0; i < imagemPGM -> height; i++) {
         for (int j = 0; j < imagemPGM -> width; j++) {
         	
-            if (imagemPGM -> matrizP2[i][j] == atual && contador <= imagemP2 -> widht) {
+            if (matrizP2[i][j] == atual && contador <= imagemPGM -> width) {
                 contador++; // Incrementa a contagem se o elemento atual é o mesmo que o anterior
                 
             } else{
@@ -64,19 +64,21 @@ void compactar(imagemP2* imagemPGM, int matrizP2[][24], int matrizP8[][24]){
 						matrizP8[i][k + l] = matrizP2[i][j];
 				}
 				contador = 1;
-                atual = imagem -> matrizP2[i][j];
+                atual = matrizP2[i][j];
             }
         }
         k = 0;
     }
     for(int i = 0; i < 7; i++)
-    	for(j = 0; j < 24; j++){
+    	for(int j = 0; j < 24; j++){
     		printf("%d", matrizP8[i][j]);
 		}
 }
 
-void main()
+int main()
 {
+	imagemP2 *imagemPGM;
+	
 	int matrizTesteP2[7][24] ={
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
         {0, 3, 3, 3, 3, 0, 0, 7, 7, 7, 7, 0, 0, 11, 11, 11, 11, 0, 0, 15, 15, 15, 15, 0},
@@ -88,7 +90,9 @@ void main()
         
         int matrizTesteP8[7][24];
         
-        compactar(matrizTesteP2, matrizTesteP8);
+        compactar(imagemPGM, matrizTesteP2, matrizTesteP8);
+        
+        return 0;
 	
     
 }
