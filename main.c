@@ -26,7 +26,7 @@ void alocarMatrizP2(imagemP2 *imagemPGM)
 void lerArquivoP2(FILE *P2, imagemP2 *imagemPGM)
 {
 
-    P2 = fopen("arquivoP2", 'r');
+    P2 = fopen("arquivoP2", "r");
     fscanf(P2, "%s", imagemPGM->magicNumber);
     fscanf(P2, "%d %d", imagemPGM->width, imagemPGM->height);
     fscanf(P2, "%d", imagemPGM->maxGray);
@@ -42,17 +42,13 @@ void lerArquivoP2(FILE *P2, imagemP2 *imagemPGM)
     }
 }
 
-void alocarMatrizP8(imagemP8 *imagemPGMC){
-	imagemPGMC -> *matrizP8 = malloc(sizeof(*int) * imagemPGM -> height)
-}
-
-void compactar(int matriz[][24], int matrizP8[][]){
+void compactar(imagemP2* imagemPGM, int matrizP2[][24], int matrizP8[][24]){
 	int contador = 1;
 	int atual = matrizP2[0][0];
 	int k = 0;
 	
 	for (int i = 0; i < imagemPGM -> height; i++) {
-        for (int j = 0; j < imagemPGM -> widht; j++) {
+        for (int j = 0; j < imagemPGM -> width; j++) {
         	
             if (imagemPGM -> matrizP2[i][j] == atual && contador <= imagemP2 -> widht) {
                 contador++; // Incrementa a contagem se o elemento atual é o mesmo que o anterior
