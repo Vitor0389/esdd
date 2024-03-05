@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+
 typedef struct
 {
     char magicNumber[3];
@@ -8,9 +10,17 @@ typedef struct
     int *matrizP2;
 } imagemP2;
 
+typedef struct
+{
+    char magicNumber[3];
+    int width, height;
+    int maxGray;
+    int **matrizP8;
+} imagemP8;
+
 void alocarMatrizP2(imagemP2 *imagemPGM)
 {
-    imagemPGM->matrizP2 = calloc(sizeof(int), (imagemPGM->width * imagemPGM->height));
+    imagemPGM->matrizP2 = (int*)malloc(sizeof(int) * (imagemPGM->width * imagemPGM->height));
 }
 
 void lerArquivoP2(FILE *P2, imagemP2 *imagemPGM)
@@ -32,20 +42,57 @@ void lerArquivoP2(FILE *P2, imagemP2 *imagemPGM)
     }
 }
 
-void compactar(imagemP2 *imagemPGM)
-{
+void alocarMatrizP8(imagemP8 *imagemPGMC){
+	imagemPGMC -> *matrizP8 = malloc(sizeof(*int) * imagemPGM -> height)
 }
 
-int main(int argc, char *argv[])
-{
-    if (argc != 3)
-    {
-        printf("Uso: nome_do_programa <arquivo_de_entrada> <arquivo_de_saida>\n");
-        exit(1);
+void compactar(int matriz[][24], int matrizP8[][]){
+	int contador = 1;
+	int atual = matrizP2[0][0];
+	int k = 0;
+	
+	for (int i = 0; i < imagemPGM -> height; i++) {
+        for (int j = 0; j < imagemPGM -> widht; j++) {
+        	
+            if (imagemPGM -> matrizP2[i][j] == atual && contador <= imagemP2 -> widht) {
+                contador++; // Incrementa a contagem se o elemento atual é o mesmo que o anterior
+                
+            } else{
+                if(contador > 3){
+                	matrizP8[i][k] = -10;
+                	matrizP8[i][k + 1] = atual;
+                	matrizP8[i][k + 2] = contador;
+                	k += 3;
+				} else{
+					for(int l = 0; l<contador; l++)
+						matrizP8[i][k + l] = matrizP2[i][j];
+				}
+				contador = 1;
+                atual = imagem -> matrizP2[i][j];
+            }
+        }
+        k = 0;
     }
-    imagemP2 *imagemPGM;
-    char *entrada = argv[1];
-    char *saida = argv[2];
+    for(int i = 0; i < 7; i++)
+    	for(j = 0; j < 24; j++){
+    		printf("%d", matrizP8[i][j]);
+		}
+}
 
-    return 0;
+void main()
+{
+	int matrizTesteP2[7][24] ={
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 3, 3, 3, 3, 0, 0, 7, 7, 7, 7, 0, 0, 11, 11, 11, 11, 0, 0, 15, 15, 15, 15, 0},
+        {0, 3, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 11, 0, 0, 0, 0, 0, 15, 0, 0, 15, 0},
+        {0, 3, 3, 3, 0, 0, 0, 7, 7, 7, 0, 0, 0, 11, 11, 11, 0, 0, 0, 15, 15, 15, 15, 0},
+        {0, 3, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 11, 0, 0, 0, 0, 0, 15, 0, 0, 0, 0},
+        {0, 3, 0, 0, 0, 0, 0, 7, 7, 7, 7, 0, 0, 11, 11, 11, 11, 0, 0, 15, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
+        
+        int matrizTesteP8[7][24];
+        
+        compactar(matrizTesteP2, matrizTesteP8);
+	
+    
 }
