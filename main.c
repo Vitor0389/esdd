@@ -69,10 +69,11 @@ void compactar(imagemP2* imagemPGM, int matrizP2[][24], int matrizP8[][24]){
         }
         k = 0;
     }
-    for(int i = 0; i < 7; i++)
+    for(int i = 0; i < 7; i++){
+        printf("\n");
     	for(int j = 0; j < 24; j++){
-    		printf("%d", matrizP8[i][j]);
-		}
+    		printf("[%d]", matrizP8[i][j]);
+		}}
 }
 
 int main()
