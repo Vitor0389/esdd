@@ -56,6 +56,9 @@ void compactar(imagemP2 *imagemPGM, imagemP8 *imagemPGMC)
     int contador = 1;
     int k = 0;
     int arrayAuxiliar[24];
+    int *sizeLines;
+
+    sizeLines = (int*)calloc(sizeof(int), imagemPGM ->height);
 
     for (int i = 0; i < imagemPGM->height; i++)
     {
@@ -80,13 +83,22 @@ void compactar(imagemP2 *imagemPGM, imagemP8 *imagemPGMC)
 
                     }
                     else{
+                        for(int l = 0; l < contador; l++){
+                            arrayAuxiliar[k] = imagemPGM -> matrizP2[i][j];
+                            k++;
+                        }
                     }
-                    atual = imagemPGM -> matrizP2[i][j];
+                    atual = imagemPGM -> matrizP2[i][j + 1];
                     contador = 1;
                 }
             }
             else{
-                imagemPGMC ->matrizP8[i] = (int*)calloc(sizeof(int), k + 1);
+                atual = imagemPGM -> matrizP2[i][j + 1];
+                contador = 1;
+                imagemPGMC ->matrizP8[i] = (int*)calloc(sizeof(int), k );
+                for(int m = 0; m < k; m++){
+                    imagemPGMC -> matrizP8[i][m] = arrayAuxiliar[m];
+                }
                 k = 0;
             }
         }
