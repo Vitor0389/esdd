@@ -31,10 +31,10 @@ void alocarMatrizP2(imagemP2 *imagemPGM)
 void lerArquivoP2(FILE *P2, imagemP2 *imagemPGM)
 {
 
-    P2 = fopen("arquivoP2", "r");
+    P2 = fopen("C:/Users/Vitor M/Documents/GitHub/trabalho1esdd/matrizP2.txt", "r");
     fscanf(P2, "%s", imagemPGM->magicNumber);
-    fscanf(P2, "%d %d", imagemPGM->width, imagemPGM->height);
-    fscanf(P2, "%d", imagemPGM->maxGray);
+    fscanf(P2, "%d %d", &imagemPGM->width, &imagemPGM->height);
+    fscanf(P2, "%d", &imagemPGM->maxGray);
 
     alocarMatrizP2(imagemPGM);
 
@@ -42,7 +42,7 @@ void lerArquivoP2(FILE *P2, imagemP2 *imagemPGM)
     {
         for (int j = 0; j < imagemPGM->width; j++)
         {
-            fscanf(P2, "%d", imagemPGM->matrizP2[i][j]);
+            fscanf(P2, "%d", &imagemPGM->matrizP2[i][j]);
         }
     }
 
@@ -50,18 +50,16 @@ void lerArquivoP2(FILE *P2, imagemP2 *imagemPGM)
 }
 
 void escreverArquivoP8(imagemP8 *imagemPGMC, int* sizeLines, int altura) {
-    FILE* file = fopen("C:/Users/Vitor M/Documents/GitHub/trabalho1esdd/matriz.txt", "w");
+    FILE* file = fopen("C:/Users/Vitor M/Documents/GitHub/trabalho1esdd/matrizP8.txt", "w");
     char arroba = '@';
 
-    if (file == NULL) {
-        return;
-    }
+    
 
 
     for (int i = 0; i < altura; i++) {
         for (int j = 0; j < sizeLines[i]; j++) {
             if (imagemPGMC ->matrizP8[i][j] == -10) {
-                fprintf(file, "%c", arroba);
+                fprintf(file, "%c ", arroba);
             } else {
                 fprintf(file, "%d ", imagemPGMC ->matrizP8[i][j]);
             }
@@ -137,7 +135,6 @@ void compactar(imagemP2 *imagemPGM, imagemP8 *imagemPGMC)
 
 int main()
 {
-    imagemP2 *imagemPGM;
 
     return 0;
 }

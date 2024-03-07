@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 void escreverArquivoP8(int** matrizP8, int* sizeLines, int altura) {
-    FILE* file = fopen("C:/Users/Vitor M/Documents/GitHub/trabalho1esdd/matriz.txt", "w");
+    FILE* file = fopen("C:/Users/Vitor M/Documents/GitHub/trabalho1esdd/matrizP2.txt", "w");
     char arroba = '@';
 
     if (file == NULL) {
