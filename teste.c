@@ -1,8 +1,26 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+typedef struct
+{
+    char magicNumber[3];
+    int width, height;
+    int maxGray;
+    int **matrizP2;
+} imagemP2;
+
+typedef struct
+{
+    char magicNumber[3];
+    int width, height;
+    int maxGray;
+    int **matrizP8;
+} imagemP8;
+
+
+
 void escreverArquivoP8(int** matrizP8, int* sizeLines, int altura) {
-    FILE* file = fopen("C:/Users/Vitor M/Documents/GitHub/trabalho1esdd/matrizP2.txt", "w");
+    FILE* file = fopen("C:/Users/Vitor M/Documents/GitHub/trabalho1esdd/matrizP8.txt", "w");
     char arroba = '@';
 
     if (file == NULL) {
@@ -82,6 +100,10 @@ void compactar(int **matrizP2, int **matrizP8, int altura, int largura)
     }
     escreverArquivoP8(matrizP8, sizeLines, altura);
 }
+
+void descompactar(int** matrizP2, int** matrizP8, int altura, int largura){
+        
+}
 int main()
 {
     int **matrizP2;
@@ -113,7 +135,6 @@ int main()
         }
     }
 
-    // Não se esqueça de liberar a memória alocada para a matrizP2 quando terminar de usá-la
     compactar(matrizP2, matrizP8, linhas, colunas);
     return 0;
 }
