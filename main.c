@@ -49,9 +49,35 @@ void lerArquivoP2(FILE *P2, imagemP2 *imagemPGM)
     fclose(P2);
 }
 
+void escreverArquivoP8(imagemP8 *imagemPGMC, int* sizeLines, int altura) {
+    FILE* file = fopen("C:/Users/Vitor M/Documents/GitHub/trabalho1esdd/matriz.txt", "w");
+    char arroba = '@';
+
+    if (file == NULL) {
+        return;
+    }
+
+
+    for (int i = 0; i < altura; i++) {
+        for (int j = 0; j < sizeLines[i]; j++) {
+            if (imagemPGMC ->matrizP8[i][j] == -10) {
+                fprintf(file, "%c", arroba);
+            } else {
+                fprintf(file, "%d ", imagemPGMC ->matrizP8[i][j]);
+            }
+        }
+        fprintf(file, "\n");
+    }
+
+    fclose(file);
+}
+void AlocaMatrizP8(imagemP8 *imagemPGMC, int linhas)
+{
+    imagemPGMC->matrizP8 = calloc(sizeof(int *), linhas);
+}
 void compactar(imagemP2 *imagemPGM, imagemP8 *imagemPGMC)
 {
-    imagemPGMC->matrizP8 = calloc(sizeof(int *), imagemPGM->height);
+    AlocaMatrizP8(imagemPGMC, imagemPGM->height);
     int atual = imagemPGM->matrizP2[0][0];
     int contador = 1;
     int k = 0;
@@ -95,26 +121,23 @@ void compactar(imagemP2 *imagemPGM, imagemP8 *imagemPGMC)
                 contador = 1;
             }
             if (j + 1 == imagemPGM->width)
-        {
-            imagemPGMC->matrizP8[i] = (int *)calloc(sizeof(int), k);
-            sizeLines[i] = k;
-            for (int m = 0; m < k; m++)
             {
-                imagemPGMC->matrizP8[i][m] = arrayAuxiliar[m];
+                imagemPGMC->matrizP8[i] = (int *)calloc(sizeof(int), k);
+                sizeLines[i] = k;
+                for (int m = 0; m < k; m++)
+                {
+                    imagemPGMC->matrizP8[i][m] = arrayAuxiliar[m];
+                }
+                k = 0;
             }
-            k = 0;
-        }
         }
     }
-}
-void AlocaMatrizP8(imagemP8 *imagemPGMC)
-{
+    escreverArquivoP8(imagemPGMC, sizeLines, imagemPGMC ->height);
 }
 
 int main()
 {
     imagemP2 *imagemPGM;
-
 
     return 0;
 }

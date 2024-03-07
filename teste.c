@@ -1,6 +1,29 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+void escreverArquivoP8(int** matrizP8, int* sizeLines, int altura) {
+    FILE* file = fopen("C:/Users/Vitor M/Documents/GitHub/trabalho1esdd/matriz.txt", "w");
+    char arroba = '@';
+
+    if (file == NULL) {
+        return;
+    }
+
+
+    for (int i = 0; i < altura; i++) {
+        for (int j = 0; j < sizeLines[i]; j++) {
+            if (matrizP8[i][j] == -10) {
+                fprintf(file, "%c ", arroba);
+            } else {
+                fprintf(file, "%d ", matrizP8[i][j]);
+            }
+        }
+        fprintf(file, "\n");
+    }
+
+    fclose(file);
+}
+
 void compactar(int **matrizP2, int **matrizP8, int altura, int largura)
 {
     matrizP8 = calloc(sizeof(int *), altura);
@@ -57,14 +80,8 @@ void compactar(int **matrizP2, int **matrizP8, int altura, int largura)
             }
         }
     }
-    for(int i = 0; i < altura; i++){
-        for(int j = 0 ; j < sizeLines[i]; j++){
-            printf("[%2d]", matrizP8[i][j]);
-        }
-        printf("\n");
-    }
+    escreverArquivoP8(matrizP8, sizeLines, altura);
 }
-
 int main()
 {
     int **matrizP2;
