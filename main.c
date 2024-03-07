@@ -51,56 +51,59 @@ void lerArquivoP2(FILE *P2, imagemP2 *imagemPGM)
 
 void compactar(imagemP2 *imagemPGM, imagemP8 *imagemPGMC)
 {
-    imagemPGMC->matrizP8 = calloc(sizeof(int *), imagemPGM -> height);
+    imagemPGMC->matrizP8 = calloc(sizeof(int *), imagemPGM->height);
     int atual = imagemPGM->matrizP2[0][0];
     int contador = 1;
     int k = 0;
     int arrayAuxiliar[24];
     int *sizeLines;
 
-    sizeLines = (int*)calloc(sizeof(int), imagemPGM ->height);
+    sizeLines = (int *)calloc(sizeof(int), imagemPGM->height);
 
     for (int i = 0; i < imagemPGM->height; i++)
     {
         for (int j = 0; j < imagemPGM->width; j++)
         {
-            if (j + 1 < imagemPGM->width)
+            if (j + 1 < imagemPGM->width && imagemPGM->matrizP2[i][j + 1] == atual)
             {
-                if (imagemPGM->matrizP2[i][j + 1] == atual)
+
+                contador++;
+            }
+            else
+            {
+                if (contador > 3)
                 {
-                    contador++;
+                    arrayAuxiliar[k] = -10;
+                    k++;
+                    arrayAuxiliar[k] = imagemPGM->matrizP2[i][j];
+                    k++;
+                    arrayAuxiliar[k] = contador;
+                    k++;
                 }
                 else
                 {
-                    if (contador > 3)
+                    for (int l = 0; l < contador; l++)
                     {
-                        arrayAuxiliar[k] = -10;
-                        k++;
                         arrayAuxiliar[k] = imagemPGM->matrizP2[i][j];
                         k++;
-                        arrayAuxiliar[k] = contador;
-                        k++;
-
                     }
-                    else{
-                        for(int l = 0; l < contador; l++){
-                            arrayAuxiliar[k] = imagemPGM -> matrizP2[i][j];
-                            k++;
-                        }
-                    }
-                    atual = imagemPGM -> matrizP2[i][j + 1];
-                    contador = 1;
                 }
-            }
-            else{
-                atual = imagemPGM -> matrizP2[i][j + 1];
+                if (j + 1 < imagemPGM->width)
+                {
+                    atual = imagemPGM->matrizP2[i][j + 1];
+                }
                 contador = 1;
-                imagemPGMC ->matrizP8[i] = (int*)calloc(sizeof(int), k );
-                for(int m = 0; m < k; m++){
-                    imagemPGMC -> matrizP8[i][m] = arrayAuxiliar[m];
-                }
-                k = 0;
             }
+            if (j + 1 == imagemPGM->width)
+        {
+            imagemPGMC->matrizP8[i] = (int *)calloc(sizeof(int), k);
+            sizeLines[i] = k;
+            for (int m = 0; m < k; m++)
+            {
+                imagemPGMC->matrizP8[i][m] = arrayAuxiliar[m];
+            }
+            k = 0;
+        }
         }
     }
 }
@@ -112,18 +115,6 @@ int main()
 {
     imagemP2 *imagemPGM;
 
-    int matrizTesteP2[7][24] = {
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 3, 3, 3, 3, 0, 0, 7, 7, 7, 7, 0, 0, 11, 11, 11, 11, 0, 0, 15, 15, 15, 15, 0},
-        {0, 3, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 11, 0, 0, 0, 0, 0, 15, 0, 0, 15, 0},
-        {0, 3, 3, 3, 0, 0, 0, 7, 7, 7, 0, 0, 0, 11, 11, 11, 0, 0, 0, 15, 15, 15, 15, 0},
-        {0, 3, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 11, 0, 0, 0, 0, 0, 15, 0, 0, 0, 0},
-        {0, 3, 0, 0, 0, 0, 0, 7, 7, 7, 7, 0, 0, 11, 11, 11, 11, 0, 0, 15, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
-
-    int matrizTesteP8[7][24];
-
-    compactar(imagemPGM, matrizTesteP2, matrizTesteP8);
 
     return 0;
 }
