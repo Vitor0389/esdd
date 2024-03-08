@@ -4,14 +4,6 @@ int** lerArquivoP2(char magicNumber[], int altura, int largura, int maxGray, int
 {
     FILE* P2;
     P2 = fopen("C:/Users/Vitor M/Documents/GitHub/trabalho1esdd/matrizP2.txt", "r");
-    matrizP2 = (int **)calloc(sizeof(int *), altura);
-
-      for (int i = 0; i < altura ;i++)
-    {
-        matrizP2[i] = (int *)calloc(sizeof(int), largura);
-    }
-
-
     if (P2 == NULL)
     {
         printf("Erro ao abrir o arquivo.\n");
@@ -21,6 +13,14 @@ int** lerArquivoP2(char magicNumber[], int altura, int largura, int maxGray, int
     fgets(magicNumber, 4, P2);
     fscanf(P2, "%d %d", &largura, &altura);
     fscanf(P2, "%d", &maxGray);
+
+    matrizP2 = (int **)calloc(sizeof(int *), altura);
+
+      for (int i = 0; i < altura ;i++)
+    {
+        matrizP2[i] = (int *)calloc(sizeof(int), largura);
+    }
+
 
 
 
@@ -36,6 +36,42 @@ int** lerArquivoP2(char magicNumber[], int altura, int largura, int maxGray, int
     fclose(P2);
 
     return matrizP2;
+}
+int** lerArquivoP8(char magicNumber[], int altura, int largura, int maxGray, int** matrizP8)
+{
+    FILE* P8;
+    P8 = fopen("C:/Users/Vitor M/Documents/GitHub/trabalho1esdd/matrizP8.txt", "r");
+
+    if (P8 == NULL)
+    {
+        printf("Erro ao abrir o arquivo.\n");
+        exit(1);
+    }
+
+
+    fgets(magicNumber, 4, P8);
+    fscanf(P8, "%d %d", &largura, &altura);
+    fscanf(P8, "%d", &maxGray);
+    matrizP8 = (int **)calloc(sizeof(int *), altura);
+
+      for (int i = 0; i < altura ;i++)
+    {
+        matrizP8[i] = (int *)calloc(sizeof(int), largura);
+    }
+
+
+    for (int i = 0; i < altura; i++)
+    {
+        for (int j = 0; j < largura; j++)
+        {
+            fscanf(P8, "%d", &matrizP8[i][j]);
+        }
+        printf("\n");
+    }
+
+    fclose(P8);
+
+    return matrizP8;
 }
 void escreverArquivoP8(int** matrizP8, int* sizeLines, int altura, int largura, int maxGray) {
     FILE* file = fopen("C:/Users/Vitor M/Documents/GitHub/trabalho1esdd/matrizP8.txt", "w");
@@ -154,7 +190,6 @@ int main()
     char magicNumberP2[3];
 
     matrizP2 = lerArquivoP2(magicNumberP2, linhas, colunas, maxGray, matrizP2);
-    matrizP8 = (int **)calloc(sizeof(int *), linhas);
 
     
 
