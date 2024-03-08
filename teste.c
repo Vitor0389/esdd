@@ -1,24 +1,42 @@
 #include <stdio.h>
 #include <stdlib.h>
-
-typedef struct
+int** lerArquivoP2(char magicNumber[], int altura, int largura, int maxGray, int** matrizP2)
 {
-    char magicNumber[3];
-    int width, height;
-    int maxGray;
-    int **matrizP2;
-} imagemP2;
+    FILE* P2;
+    P2 = fopen("C:/Users/Vitor M/Documents/GitHub/trabalho1esdd/matrizP2.txt", "r");
+    matrizP2 = (int **)calloc(sizeof(int *), altura);
 
-typedef struct
-{
-    char magicNumber[3];
-    int width, height;
-    int maxGray;
-    int **matrizP8;
-} imagemP8;
+      for (int i = 0; i < altura ;i++)
+    {
+        matrizP2[i] = (int *)calloc(sizeof(int), largura);
+    }
 
 
+    if (P2 == NULL)
+    {
+        printf("Erro ao abrir o arquivo.\n");
+        exit(1);
+    }
 
+    fgets(magicNumber, 4, P2);
+    fscanf(P2, "%d %d", &largura, &altura);
+    fscanf(P2, "%d", &maxGray);
+
+
+
+    for (int i = 0; i < altura; i++)
+    {
+        for (int j = 0; j < largura; j++)
+        {
+            fscanf(P2, "%d", &matrizP2[i][j]);
+        }
+        printf("\n");
+    }
+
+    fclose(P2);
+
+    return matrizP2;
+}
 void escreverArquivoP8(int** matrizP8, int* sizeLines, int altura, int largura, int maxGray) {
     FILE* file = fopen("C:/Users/Vitor M/Documents/GitHub/trabalho1esdd/matrizP8.txt", "w");
     char arroba = '@';
@@ -106,39 +124,39 @@ void compactar(int **matrizP2, int **matrizP8, int altura, int largura, int maxG
 }
 
 void descompactar(int** matrizP2, int** matrizP8, int altura, int largura){
-        
+    matrizP2 = calloc(sizeof(int), altura);
+    int k = 0;
+    int l = 0;
+    for(int i = 0; i < altura; i++){
+        for(int j = 0; j < largura; j++){
+            if(matrizP8[i][j] == -10){
+                k += 2;
+                l = matrizP8[i][k];
+                k--;
+                for(int m = 0; m < l; m++){
+                    matrizP2[i][j + m] = matrizP8[i][k]; 
+                }
+                k = 0;
+            }
+            else{
+                matrizP2[i][j] = matrizP8[i][j];
+            }
+        }
+    }
 }
+
 int main()
 {
     int **matrizP2;
     int **matrizP8;
     int linhas = 7, colunas = 24;
     int maxGray = 15;
+    char magicNumberP2[3];
 
-    matrizP2 = (int **)calloc(sizeof(int *), linhas);
+    matrizP2 = lerArquivoP2(magicNumberP2, linhas, colunas, maxGray, matrizP2);
     matrizP8 = (int **)calloc(sizeof(int *), linhas);
 
-    for (int i = 0; i < linhas; i++)
-    {
-        matrizP2[i] = (int *)calloc(sizeof(int), colunas);
-    }
-
-    int matrizTesteP2[7][24] = {
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 3, 3, 3, 3, 0, 0, 7, 7, 7, 7, 0, 0, 11, 11, 11, 11, 0, 0, 15, 15, 15, 15, 0},
-        {0, 3, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 11, 0, 0, 0, 0, 0, 15, 0, 0, 15, 0},
-        {0, 3, 3, 3, 0, 0, 0, 7, 7, 7, 0, 0, 0, 11, 11, 11, 0, 0, 0, 15, 15, 15, 15, 0},
-        {0, 3, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 11, 0, 0, 0, 0, 0, 15, 0, 0, 0, 0},
-        {0, 3, 0, 0, 0, 0, 0, 7, 7, 7, 7, 0, 0, 11, 11, 11, 11, 0, 0, 15, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
-
-    for (int i = 0; i < linhas; i++)
-    {
-        for (int j = 0; j < colunas; j++)
-        {
-            matrizP2[i][j] = matrizTesteP2[i][j];
-        }
-    }
+    
 
     compactar(matrizP2, matrizP8, linhas, colunas, maxGray);
     return 0;

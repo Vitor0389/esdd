@@ -28,20 +28,17 @@ void alocarMatrizP2(imagemP2 *imagemPGM)
     }
 }
 
-void lerArquivoP2(FILE *P2, imagemP2 *imagemPGM)
+void lerArquivoP2(FILE* P2, imagemP2 *imagemPGM)
 {
-
-    P2 = fopen("C:/Users/Vitor M/Documents/GitHub/trabalho1esdd/matrizP2.txt", "r");
     if (P2 == NULL)
     {
         printf("Erro ao abrir o arquivo.\n");
         exit(1);
     }
 
-    fscanf(P2, "%s", imagemPGM->magicNumber);
+    fscanf(P2, "%s", &imagemPGM->magicNumber);
     fscanf(P2, "%d %d", &imagemPGM->width, &imagemPGM->height);
     fscanf(P2, "%d", &imagemPGM->maxGray);
-    fflush(stdout);
 
     alocarMatrizP2(imagemPGM);
 
@@ -147,10 +144,12 @@ void compactar(imagemP2 *imagemPGM, imagemP8 *imagemPGMC)
 
 int main()
 {
-    FILE P2;
+    FILE* P2;
     imagemP8 imagemPGMC;
     imagemP2 imagemPGM;
-    lerArquivoP2(&P2, &imagemPGM);
+
+    P2 = fopen("C:/Users/Vitor M/Documents/GitHub/trabalho1esdd/matrizP2.txt", "r");
+    lerArquivoP2(P2, &imagemPGM);
     compactar(&imagemPGM, &imagemPGMC);
     return 0;
 }
