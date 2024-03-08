@@ -19,18 +19,26 @@ typedef struct
 
 
 
-void escreverArquivoP8(int** matrizP8, int* sizeLines, int altura) {
+void escreverArquivoP8(int** matrizP8, int* sizeLines, int altura, int largura, int maxGray) {
     FILE* file = fopen("C:/Users/Vitor M/Documents/GitHub/trabalho1esdd/matrizP8.txt", "w");
     char arroba = '@';
 
     if (file == NULL) {
         return;
     }
-
+    fprintf(file, "%s", "P8\n");
+    fprintf(file, "%d %d", largura, altura);
+    fprintf(file, "\n");
+    fprintf(file, "%d", maxGray);
+    fprintf(file, "\n");
 
     for (int i = 0; i < altura; i++) {
         for (int j = 0; j < sizeLines[i]; j++) {
+            if (matrizP8[i][j] == -10) {
+                fprintf(file, "%c ", arroba);
+            } else {
                 fprintf(file, "%d ", matrizP8[i][j]);
+            }
         }
         fprintf(file, "\n");
     }
@@ -38,7 +46,7 @@ void escreverArquivoP8(int** matrizP8, int* sizeLines, int altura) {
     fclose(file);
 }
 
-void compactar(int **matrizP2, int **matrizP8, int altura, int largura)
+void compactar(int **matrizP2, int **matrizP8, int altura, int largura, int maxGray)
 {
     matrizP8 = calloc(sizeof(int *), altura);
     int atual = matrizP2[0][0];
@@ -94,36 +102,18 @@ void compactar(int **matrizP2, int **matrizP8, int altura, int largura)
             }
         }
     }
-    escreverArquivoP8(matrizP8, sizeLines, altura);
+    escreverArquivoP8(matrizP8, sizeLines, altura, largura, maxGray);
 }
 
 void descompactar(int** matrizP2, int** matrizP8, int altura, int largura){
-    matrizP2 = calloc(sizeof(int), altura);
-    int k = 0;
-    int l = 0;
-    for(int i = 0; i < altura; i++){
-        for(int j = 0; j < largura; j++){
-            if(matrizP8[i][j] == -10){
-                k += 2;
-                l = matrizP8[i][k];
-                k--;
-                for(int m = 0; m < l; m++){
-                    matrizP2[i][j + m] = matrizP8[i][k]; 
-                }
-                k = 0;
-            }
-            else{
-                matrizP2[i][j] = matrizP8[i][j];
-            }
-        }
-    }
+        
 }
-
 int main()
 {
     int **matrizP2;
     int **matrizP8;
     int linhas = 7, colunas = 24;
+    int maxGray = 15;
 
     matrizP2 = (int **)calloc(sizeof(int *), linhas);
     matrizP8 = (int **)calloc(sizeof(int *), linhas);
@@ -150,7 +140,6 @@ int main()
         }
     }
 
-    // Não se esqueça de liberar a memória alocada para a matrizP2 quando terminar de usá-la
-    compactar(matrizP2, matrizP8, linhas, colunas);
+    compactar(matrizP2, matrizP8, linhas, colunas, maxGray);
     return 0;
 }
