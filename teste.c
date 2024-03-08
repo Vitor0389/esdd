@@ -37,7 +37,7 @@ int** lerArquivoP2(char magicNumber[], int altura, int largura, int maxGray, int
 
     return matrizP2;
 }
-int** lerArquivoP8(char magicNumber[], int altura, int largura, int maxGray, int** matrizP8)
+char** lerArquivoP8(char magicNumber[], int altura, int larguraP8, int maxGrayP8, char** matrizP8)
 {
     FILE* P8;
     P8 = fopen("C:/Users/Vitor M/Documents/GitHub/trabalho1esdd/matrizP8.txt", "r");
@@ -50,24 +50,15 @@ int** lerArquivoP8(char magicNumber[], int altura, int largura, int maxGray, int
 
 
     fgets(magicNumber, 4, P8);
-    fscanf(P8, "%d %d", &largura, &altura);
-    fscanf(P8, "%d", &maxGray);
-    matrizP8 = (int **)calloc(sizeof(int *), altura);
+    fscanf(P8, "%d %d", &larguraP8, &altura);
+    fscanf(P8, "%d", &maxGrayP8);
+    matrizP8 = (char **)calloc(sizeof(char *), altura);
 
       for (int i = 0; i < altura ;i++)
     {
-        matrizP8[i] = (int *)calloc(sizeof(int), largura);
+        fgets(matrizP8[i], larguraP8, P8);
     }
 
-
-    for (int i = 0; i < altura; i++)
-    {
-        for (int j = 0; j < largura; j++)
-        {
-            fscanf(P8, "%d", &matrizP8[i][j]);
-        }
-        printf("\n");
-    }
 
     fclose(P8);
 
@@ -102,7 +93,7 @@ void escreverArquivoP8(int** matrizP8, int* sizeLines, int altura, int largura, 
 
 void compactar(int **matrizP2, int **matrizP8, int altura, int largura, int maxGray)
 {
-    matrizP8 = calloc(sizeof(int *), altura);
+    matrizP8 = (int**)calloc(sizeof(int *), altura);
     int atual = matrizP2[0][0];
     int contador = 1;
     int k = 0;
@@ -160,7 +151,7 @@ void compactar(int **matrizP2, int **matrizP8, int altura, int largura, int maxG
 }
 
 void descompactar(int** matrizP2, int** matrizP8, int altura, int largura){
-    matrizP2 = calloc(sizeof(int), altura);
+    matrizP2 = (int**)calloc(sizeof(int), altura);
     int k = 0;
     int l = 0;
     for(int i = 0; i < altura; i++){
@@ -184,15 +175,23 @@ void descompactar(int** matrizP2, int** matrizP8, int altura, int largura){
 int main()
 {
     int **matrizP2;
-    int **matrizP8;
-    int linhas = 7, colunas = 24;
-    int maxGray = 15;
+    char **matrizP8;
+    int linhas = 7, colunasP2= 24;
+    int maxGrayP2 = 15;
     char magicNumberP2[3];
-
-    matrizP2 = lerArquivoP2(magicNumberP2, linhas, colunas, maxGray, matrizP2);
-
+    
+    int colunasP8;
+    int maxGrayP8;
+    char magicNumberP8[3];
     
 
-    compactar(matrizP2, matrizP8, linhas, colunas, maxGray);
+    //matrizP2 = lerArquivoP2(magicNumberP2, linhas, colunas, maxGray, matrizP2);
+
+    matrizP8 = lerArquivoP8(magicNumberP8, linhas, colunasP8, maxGrayP8, matrizP8);
+    
+    for(int i = 0; i < linhas; i ++)
+    	puts(matrizP8[i]);
+
+    //compactar(matrizP2, matrizP8, linhas, colunas, maxGray);
     return 0;
 }
