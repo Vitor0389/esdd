@@ -135,6 +135,7 @@ int main()
         }
     }
 
+    // Não se esqueça de liberar a memória alocada para a matrizP2 quando terminar de usá-la
     compactar(matrizP2, matrizP8, linhas, colunas);
     return 0;
 }
