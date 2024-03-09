@@ -1,3 +1,4 @@
+// Nomes: Vitor M. Calicchio, Caio Vitor Soares, Bernardo Fernandes Filho;
 #include <stdio.h>
 #include <stdlib.h>
 int **lerArquivoP2(char magicNumber[], int altura, int largura, int maxGray, int **matrizP2)
