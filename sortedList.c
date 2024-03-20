@@ -72,16 +72,37 @@ t_sorted_list* create_list(int qtd){
     sortedList->itens = (t_elem*)malloc(qtd * sizeof(t_elem));
 }
 
-int is_full(t_sorted_list *sortedList) {return sortedList->qtdElem == sortedList->max? 1:0;}
 int is_empty(t_sorted_list *sortedList) {return sortedList->qtdElem == 0? 1:0;}
 
-int push(t_sorted_list *sortedList, t_elem elem){
-    if(is_full(sortedList)) return 0;
-
-    sortedList ->itens[sortedList->qtdElem] = elem;
+void append(t_sorted_list *sortedList, t_elem elem){
+    sortedList ->itens[sortedList->qtdElem++] = elem;
 
     if(sortedList ->qtdElem > 1){
         mergeSort(sortedList->itens, sortedList->itens[0], sortedList->itens[sortedList->max]);
     }
-    return 1;
+
+    if(sortedList ->qtdElem > sortedList ->max){
+        (t_sorted_list*)realloc(sortedList ->itens, sortedList->qtdElem * sizeof(t_elem));
+    }
 }
+
+void print_list(t_sorted_list *sortedList){
+    for(int i = 0; i < sortedList ->qtdElem; i++){
+        printf("Elemento[%d] : [%d]", sortedList->qtdElem, sortedList->itens[i]);
+    }
+}
+
+
+void remove_by_index(t_sorted_list *sortedList, int index){}
+
+void remove_by_element(t_sorted_list *sortedList, t_elem elem){}
+
+int index_of(t_sorted_list *sortedList, t_elem elem){}
+
+int get_index(t_sorted_list *sortedList, int index){}
+
+int count(t_sorted_list *sortedList, t_elem elem){}
+
+int len(t_sorted_list *sortedList) {}
+
+void clear(t_sorted_list *sortedList){}
