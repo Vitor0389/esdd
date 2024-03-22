@@ -70,28 +70,30 @@ t_sorted_list* create_list(int qtd){
     sortedList->max = qtd;
     sortedList->qtdElem = 0;
     sortedList->itens = (t_elem*)malloc(qtd * sizeof(t_elem));
+    
+    return sortedList;
 }
 
 int is_empty(t_sorted_list *sortedList) {return sortedList->qtdElem == 0? 1:0;}
 
 void append(t_sorted_list *sortedList, t_elem elem){
+    if(sortedList ->qtdElem >= sortedList ->max){
+        sortedList->itens = realloc(sortedList->itens, (sortedList->qtdElem + 1) * sizeof(t_elem));
+    }
+    
     sortedList ->itens[sortedList->qtdElem++] = elem;
 
     if(sortedList ->qtdElem > 1){
-        mergeSort(sortedList->itens, sortedList->itens[0], sortedList->itens[sortedList->max]);
-    }
-
-    if(sortedList ->qtdElem > sortedList ->max){
-        (t_sorted_list*)realloc(sortedList ->itens, sortedList->qtdElem * sizeof(t_elem));
-        mergeSort(sortedList->itens, sortedList->itens[0], sortedList->itens[sortedList->qtdElem - 1]);
+        mergeSort(sortedList->itens, 0, sortedList->qtdElem - 1);
     }
 }
 
 void print_list(t_sorted_list *sortedList){
     for(int i = 0; i < sortedList ->qtdElem; i++){
-        printf("Elemento[%d] : [%d]", sortedList->qtdElem, sortedList->itens[i]);
+        printf("Elemento[%d] : [%d]\n", i, sortedList->itens[i]);
     }
 }
+
 
 
 void remove_by_index(t_sorted_list *sortedList, int index){}
@@ -107,3 +109,12 @@ int count(t_sorted_list *sortedList, t_elem elem){}
 int len(t_sorted_list *sortedList) {}
 
 void clear(t_sorted_list *sortedList){}
+
+int main(){
+    t_sorted_list *sortedlist;
+    sortedlist = create_list(10);
+    for(int i = 0; i < 12; i++){
+        append(sortedlist, rand() % 100);
+    }
+    print_list(sortedlist);
+}
