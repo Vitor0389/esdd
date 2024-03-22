@@ -83,6 +83,7 @@ void append(t_sorted_list *sortedList, t_elem elem){
 
     if(sortedList ->qtdElem > sortedList ->max){
         (t_sorted_list*)realloc(sortedList ->itens, sortedList->qtdElem * sizeof(t_elem));
+        mergeSort(sortedList->itens, sortedList->itens[0], sortedList->itens[sortedList->qtdElem - 1]);
     }
 }
 
